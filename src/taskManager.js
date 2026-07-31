@@ -26,7 +26,26 @@ function addTask(title) {
   return newTask;
 }
 
+// Toggle task completion status using 1-based task number
+function toggleTaskStatus(taskNumber) {
+  const tasks = loadTasks();
+  const index = parseInt(taskNumber) - 1;
+
+  if (isNaN(index) || index < 0 || index >= tasks.length) {
+    console.log('\nInvalid task number.\n');
+    return false;
+  }
+
+  tasks[index].completed = !tasks[index].completed;
+  saveTasks(tasks);
+
+  const statusText = tasks[index].completed ? 'completed' : 'pending';
+  console.log(`\nTask "${tasks[index].title}" marked as ${statusText}.\n`);
+  return true;
+}
+
 module.exports = {
   viewTasks,
-  addTask
+  addTask,
+  toggleTaskStatus
 };
