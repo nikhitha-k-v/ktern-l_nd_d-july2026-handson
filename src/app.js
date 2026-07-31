@@ -1,5 +1,5 @@
 const readline = require('readline');
-const { viewTasks, addTask, toggleTaskStatus, updateTask } = require('./taskManager');
+const { viewTasks, addTask, toggleTaskStatus, updateTask, deleteTask } = require('./taskManager');
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -12,7 +12,8 @@ function showMenu() {
   console.log('2. Add Task');
   console.log('3. Mark Task Complete/Pending');
   console.log('4. Update Task Description');
-  console.log('5. Exit');
+  console.log('5. Delete Task');
+  console.log('6. Exit');
   console.log('=======================\n');
   
   rl.question('Choose an option: ', (choice) => {
@@ -44,6 +45,13 @@ function showMenu() {
         });
         break;
       case '5':
+        viewTasks();
+        rl.question('Enter task number to delete: ', (num) => {
+          deleteTask(num);
+          showMenu();
+        });
+        break;
+      case '6':
         console.log('Goodbye!');
         rl.close();
         break;
