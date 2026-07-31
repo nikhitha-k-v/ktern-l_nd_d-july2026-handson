@@ -1,0 +1,17 @@
+{
+  "name": "todo-cli-app",
+  "version": "1.0.0",
+  "description": "A simple CLI To-Do Manager application built with Node.js",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "keywords": [
+    "todo",
+    "cli",
+    "nodejs",
+    "javascript"
+  ],
+  "author": "Learner",
+  "license": "ISC"
+}
