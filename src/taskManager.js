@@ -1,5 +1,6 @@
 const { loadTasks, saveTasks } = require('./storage');
 const { printTaskList } = require('./utils');
+const { isValidTitle, isValidTaskNumber } = require('./validator');
 
 // View all tasks
 function viewTasks() {
@@ -10,6 +11,11 @@ function viewTasks() {
 
 // Add a new task
 function addTask(title) {
+  if (!isValidTitle(title)) {
+    console.log('\nError: Task description cannot be empty.\n');
+    return null;
+  }
+
   const tasks = loadTasks();
   
   const newTask = {
@@ -29,13 +35,13 @@ function addTask(title) {
 // Toggle task completion status using 1-based task number
 function toggleTaskStatus(taskNumber) {
   const tasks = loadTasks();
-  const index = parseInt(taskNumber) - 1;
 
-  if (isNaN(index) || index < 0 || index >= tasks.length) {
-    console.log('\nInvalid task number.\n');
+  if (!isValidTaskNumber(taskNumber, tasks.length)) {
+    console.log('\nError: Invalid task number specified.\n');
     return false;
   }
 
+  const index = parseInt(taskNumber, 10) - 1;
   tasks[index].completed = !tasks[index].completed;
   saveTasks(tasks);
 
@@ -47,13 +53,18 @@ function toggleTaskStatus(taskNumber) {
 // Update task title by 1-based task number
 function updateTask(taskNumber, newTitle) {
   const tasks = loadTasks();
-  const index = parseInt(taskNumber) - 1;
 
-  if (isNaN(index) || index < 0 || index >= tasks.length) {
-    console.log('\nInvalid task number.\n');
+  if (!isValidTaskNumber(taskNumber, tasks.length)) {
+    console.log('\nError: Invalid task number specified.\n');
     return false;
   }
 
+  if (!isValidTitle(newTitle)) {
+    console.log('\nError: New task description cannot be empty.\n');
+    return false;
+  }
+
+  const index = parseInt(taskNumber, 10) - 1;
   const oldTitle = tasks[index].title;
   tasks[index].title = newTitle.trim();
   saveTasks(tasks);
@@ -65,13 +76,13 @@ function updateTask(taskNumber, newTitle) {
 // Delete task by 1-based task number
 function deleteTask(taskNumber) {
   const tasks = loadTasks();
-  const index = parseInt(taskNumber) - 1;
 
-  if (isNaN(index) || index < 0 || index >= tasks.length) {
-    console.log('\nInvalid task number.\n');
+  if (!isValidTaskNumber(taskNumber, tasks.length)) {
+    console.log('\nError: Invalid task number specified.\n');
     return false;
   }
 
+  const index = parseInt(taskNumber, 10) - 1;
   const removedTask = tasks.splice(index, 1)[0];
   saveTasks(tasks);
 
