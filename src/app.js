@@ -6,6 +6,12 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+// Handle graceful shutdown on Ctrl+C
+rl.on('SIGINT', () => {
+  console.log('\n\nExiting To-Do Manager. Have a great day!');
+  process.exit(0);
+});
+
 function showMenu() {
   console.log('\n==== TO-DO MANAGER ====');
   console.log('1. View All Tasks');
