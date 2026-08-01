@@ -62,9 +62,27 @@ function updateTask(taskNumber, newTitle) {
   return true;
 }
 
+// Delete task by 1-based task number
+function deleteTask(taskNumber) {
+  const tasks = loadTasks();
+  const index = parseInt(taskNumber) - 1;
+
+  if (isNaN(index) || index < 0 || index >= tasks.length) {
+    console.log('\nInvalid task number.\n');
+    return false;
+  }
+
+  const removedTask = tasks.splice(index, 1)[0];
+  saveTasks(tasks);
+
+  console.log(`\nDeleted task: "${removedTask.title}"\n`);
+  return true;
+}
+
 module.exports = {
   viewTasks,
   addTask,
   toggleTaskStatus,
-  updateTask
+  updateTask,
+  deleteTask
 };
