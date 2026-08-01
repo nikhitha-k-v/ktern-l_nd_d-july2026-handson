@@ -44,8 +44,27 @@ function toggleTaskStatus(taskNumber) {
   return true;
 }
 
+// Update task title by 1-based task number
+function updateTask(taskNumber, newTitle) {
+  const tasks = loadTasks();
+  const index = parseInt(taskNumber) - 1;
+
+  if (isNaN(index) || index < 0 || index >= tasks.length) {
+    console.log('\nInvalid task number.\n');
+    return false;
+  }
+
+  const oldTitle = tasks[index].title;
+  tasks[index].title = newTitle.trim();
+  saveTasks(tasks);
+
+  console.log(`\nUpdated task "${oldTitle}" to "${tasks[index].title}".\n`);
+  return true;
+}
+
 module.exports = {
   viewTasks,
   addTask,
-  toggleTaskStatus
+  toggleTaskStatus,
+  updateTask
 };
