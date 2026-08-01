@@ -22,8 +22,10 @@ function showMenu() {
   console.log('6. Exit');
   console.log('=======================\n');
   
-  rl.question('Choose an option: ', (choice) => {
-    switch (choice.trim()) {
+  rl.question('Choose an option (1-6): ', (input) => {
+    const choice = input ? input.trim() : '';
+
+    switch (choice) {
       case '1':
         viewTasks();
         showMenu();
@@ -58,11 +60,11 @@ function showMenu() {
         });
         break;
       case '6':
-        console.log('Goodbye!');
+        console.log('Thank you for using To-Do Manager. Goodbye!');
         rl.close();
         break;
       default:
-        console.log('Invalid option. Please try again.');
+        console.log('\n[!] Invalid selection. Please enter a number between 1 and 6.');
         showMenu();
         break;
     }
