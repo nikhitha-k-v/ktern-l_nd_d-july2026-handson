@@ -1,5 +1,5 @@
 const readline = require('readline');
-const { viewTasks, addTask } = require('./taskManager');
+const { viewTasks, addTask, toggleTaskStatus } = require('./taskManager');
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -10,7 +10,8 @@ function showMenu() {
   console.log('\n==== TO-DO MANAGER ====');
   console.log('1. View All Tasks');
   console.log('2. Add Task');
-  console.log('3. Exit');
+  console.log('3. Mark Task Complete/Pending');
+  console.log('4. Exit');
   console.log('=======================\n');
   
   rl.question('Choose an option: ', (choice) => {
@@ -26,6 +27,13 @@ function showMenu() {
         });
         break;
       case '3':
+        viewTasks();
+        rl.question('Enter task number to toggle: ', (num) => {
+          toggleTaskStatus(num);
+          showMenu();
+        });
+        break;
+      case '4':
         console.log('Goodbye!');
         rl.close();
         break;
